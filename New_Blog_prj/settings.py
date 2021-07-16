@@ -40,6 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
+    'cloudinary_storage',
+    # my apps
+    'Carousel_app',
 ]
 
 MIDDLEWARE = [
@@ -125,6 +129,18 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+
+# Whitenoise for statc files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'rid-cede-studio',
+    'API_KEY': '674135458627476',
+    'API_SECRET': 'nMJM4U0HQVJ9ZpUI7p2Z9lReR6g'
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
