@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleblock %}
+      Rakib's Personal Blog
+{% endblock titleblock %}
+{% block mainblock %}
+    <!--masonry-layout-->
+    <section class="section masonry-layout pt-45">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-columns">
+                        <!--Post-1-->
+                        
+                        {% for blog in page_obj %}
+                        <div class="card">
+                            <div class="post-card">
+                                <div class="post-card-image">
+                                    <a href="{{ blog.get_absolute_url }}">
+                                        <img src="{{ blog.blog_thumbnail.url }}" alt="image">
+                                    </a>
+        
+                                </div>
+                                <div class="post-card-content">
+                                    <a href="{{ blog.category.get_absolute_url }}" class="categorie">{{ blog.category }}</a>
+                                    <h5>
+                                        <a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a>
+                                    </h5>
+                                    <p>{{ blog.short_discription }}</p>
+                                    <div class="post-card-info">
+                                        <ul class="list-inline">
+                                            {% comment %} <li>
+                                                <a href="author.html">
+                                                    <img src="{% static 'blog/assets/img/author/1.jpg'%}" alt="">
+                                                </a>
+                                            </li> {% endcomment %}
+                                            <li>
+                                                <a href="#">{{ blog.author }}</a>
+                                            </li>
+                                            <li class="dot"></li>
+                                            <li>{{ blog.creation | timesince }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!--/-->
+
+                    </div>
+                    <!--pagination-->
+
+
+                    <div class="pagination justify-content-center">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1">« first</a>
+                                <a href="?page={{ page_obj.previous_page_number }}"><b>Previous</b></a>
+                            {% endif %}
+
+                            <span class="current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}"><b>Next</b></a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}">last »</a>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                        <!-- pagination -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/-->
+
+    <!--footer-->
+    {% include "footer.html" %}
+    <!--Search-form-->
+    <div class="search">
+        <div class="container-fluid">
+            <div class="search-width  text-center">
+                <button type="button" class="close">
+                    <i class="icon_close"></i>
+                </button>
+                <form method="GET" class="search-form" action="{% url 'Blog_app:search_blog' %}">
+                    <input type="search" value="" name="q" placeholder="What are you looking for?">
+                    <button type="submit" class="search-btn">search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--/-->
+    {% endblock mainblock %}
+

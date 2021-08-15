@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-9%64m*p63#0&bo*iz_8-6v36_)1ah3^@th!-zk%#6b+zv*ro^c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'cloudinary_storage',
     # my apps
     'Carousel_app',
+    'Blog_app',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +70,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'Blog_app.context_processors.recent_post',
+                'Blog_app.context_processors.all_category',
             ],
         },
     },

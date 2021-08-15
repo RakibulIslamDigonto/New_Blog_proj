@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleblock %}
+      Read Blog
+{% endblock titleblock %}
+{% block mainblock %}
+
+<body> 
+    <!--loading -->
+    <div class="loading">
+        <div class="circle"></div>
+    </div>
+    <!--/-->
+
+    <!-- Navigation-->
+    {% include "header.html" %}
+    <!--/-->
+    
+    <!--category-->
+    <section class="categorie-section">
+        <div class="container-fluid">
+            <div class="row">
+            </div>
+        </div>
+    </section>
+
+    <!--blog-grid-->
+        <section class="blog-grid">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-12 mt-30">
+                        <div>
+                        <h3>About Us</h3>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Illo doloribus cupiditate voluptate sapiente consequatur saepe accusantium, similique laborum ipsam officiis?
+                        
+                        </div>
+                        
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section><!--/-->
+
+    
+    <!--footer-->
+    {% include "footer.html" %}
+
+    <!--Search-form-->
+    <div class="search">
+        <div class="container-fluid">
+            <div class="search-width  text-center">
+                <button type="button" class="close">
+                    <i class="icon_close"></i>
+                </button>
+                <form class="search-form" action="#">
+                    <input type="search" value="" placeholder="What are you looking for?">
+                    <button type="submit" class="search-btn">search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--/-->
+
+  {% endblock mainblock %}

@@ -1,0 +1,172 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleblock %}
+      Blog Homepage
+{% endblock titleblock %}
+{% block mainblock %}
+
+<!-- Hero Section -->
+      {% comment %} <div class="container space-2">
+        <div class="row justify-content-lg-between align-items-lg-center">
+            <div class="col-sm-10 col-lg-5 mb-7 mb-lg-0">
+                <img
+                class="img-fluid"
+                src="assets/img/nature.jpg"
+                alt="Image Des"
+                />
+            </div>
+
+            <div class="col-lg-6">
+                <div class="mb-5">
+                    <h1 class="display-4 mb-3">
+                        Unlock your span
+                        <br />
+                        <span class="text-primary font-weight-bold">
+                        <span class="js-text-animation"></span>
+                        </span>
+                    </h1>
+                    <p class="lead">
+                        With our platform, you can quantify your skills, grow in your
+                        role and stay relevant on critical topics.
+                    </p>
+                </div>
+
+            <div class="d-sm-flex align-items-sm-center flex-sm-wrap">
+              <a class="btn btn-primary mb-2" href="#"
+                >Start a Free Trial</a
+              >
+
+              <div class="mx-2"></div>
+
+              <!-- Fancybox -->
+              <a
+                class="js-fancybox video-player video-player-btn media align-items-center text-dark mb-2"
+                href="javascript:;"
+                data-hs-fancybox-options='{
+                 "src": "//youtube.com/0qisGSwZym4",
+                 "caption": "Blueberry - Responsive Website Template",
+                 "speed": 700,
+                 "buttons": ["fullScreen", "close"],
+                 "youtube": {
+                   "autoplay": 1
+                 }
+               }'
+              >
+                <span class="video-player-icon shadow-soft mr-3">
+                  <i class="fa fa-play"></i>
+                </span>
+                <span class="media-body"> How it works </span>
+              </a>
+              <!-- End Fancybox -->
+            </div>
+          </div>
+        </div>
+      </div> {% endcomment %}
+    <br>
+    <br>
+    <div class="col-md-60 col-md-offset-1 intro-header" style="background-image: url('blog/assets/img/nature.jpg')">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                    <div class="site-heading">
+                        <h1>Modern Blog</h1>
+                        <span class="subheading">e-pulse Blog Powered by KonnectCode</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>  
+
+
+
+    <!--masonry-layout-->
+    <section class="section masonry-layout pt-45">
+    <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="card-columns">
+                        <!--Post-1-->
+                        
+                        {% for blog in all_page_obj %}
+                        <div class="card">
+                            <div class="post-card">
+                                <div class="post-card-image">
+                                    <a href="{{ blog.get_absolute_url }}">
+                                        <img src="{{ blog.blog_thumbnail.url }}" alt="image">
+                                    </a>
+        
+                                </div>
+                                <div class="post-card-content">
+                                    <a href="{{ blog.category.get_absolute_url }}" class="categorie">{{ blog.category }}</a>
+                                    <h5>
+                                        <a href="{{ blog.get_absolute_url }}">{{ blog.title }}</a>
+                                    </h5>
+                                    <p>{{ blog.short_discription }}</p>
+                                    <div class="post-card-info">
+                                        <ul class="list-inline">
+                                            {% comment %} <li>
+                                                <a href="author.html">
+                                                    <img src="{% static 'blog/assets/img/author/1.jpg'%}" alt="">
+                                                </a>
+                                            </li> {% endcomment %}
+                                            <li>
+                                                <a href="#">{{ blog.author }}</a>
+                                            </li>
+                                            <li class="dot"></li>
+                                            <li>{{ blog.creation | timesince }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <!--/-->
+
+                    </div>
+                    <!--pagination-->
+
+
+                    <div class="pagination justify-content-center">
+                        <span class="step-links">
+                            {% if page_obj.has_previous %}
+                                <a href="?page=1">« first</a>
+                                <a href="?page={{ page_obj.previous_page_number }}"><b>Previous</b></a>
+                            {% endif %}
+
+                            <span class="current">
+                                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                            </span>
+
+                            {% if page_obj.has_next %}
+                                <a href="?page={{ page_obj.next_page_number }}"><b>Next</b></a>
+                                <a href="?page={{ page_obj.paginator.num_pages }}">last »</a>
+                            {% endif %}
+                        </span>
+                    </div>
+
+                        <!-- pagination -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--/-->
+
+    <!--footer-->
+    {% include "footer.html" %}
+    <!--Search-form-->
+    <div class="search">
+        <div class="container-fluid">
+            <div class="search-width  text-center">
+                <button type="button" class="close">
+                    <i class="icon_close"></i>
+                </button>
+                <form method="GET" class="search-form" action="{% url 'Blog_app:search_blog' %}">
+                    <input type="search" value="" name="q" placeholder="What are you looking for?">
+                    <button type="submit" class="search-btn">search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--/-->
+    {% endblock mainblock %}
+

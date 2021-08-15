@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Feature, Slider
+from .models import Feature, Slider, Products, Category
 # Register your models here.
 
 
@@ -27,3 +27,25 @@ class SliderAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Slider, SliderAdmin)
+
+
+class ProductsAdmin(admin.ModelAdmin):
+
+    list_display = [
+        'title',
+        'thumbnail',
+        'short_discription'
+    ]
+
+
+admin.site.register(Products, ProductsAdmin)
+
+
+class CategoryAdmin(admin.ModelAdmin):
+
+    list_display = [
+        'name',
+        'slug'
+    ]
+
+admin.site.register(Category, CategoryAdmin)

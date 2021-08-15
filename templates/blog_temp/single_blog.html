@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleblock %}
+      Read Blog
+{% endblock titleblock %}
+{% block mainblock %}
+
+<body> 
+    <!--loading -->
+    <div class="loading">
+        <div class="circle"></div>
+    </div>
+    <!--/-->
+
+    <!-- Navigation-->
+    {% include "header.html" %}
+    <!--/-->
+    
+    <!--category-->
+    <section class="categorie-section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="categorie-title"> 
+                         <small>
+                            <a href="/">Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--blog-grid-->
+        <section class="blog-grid">
+            <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-8 mt-30">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <!--Post-1-->
+                                    <div class="post-card">
+                                        <div class="post-card-image">
+                                            <img src="{{ single_blog.blog_thumbnail.url }}" alt="">
+                                        </div>
+                                        <div class="post-card-content">
+                                            <a href="{{ single_blog.category.get_absolute_url }}" class="categorie">{{ single_blog.category }}</a>
+                                            <h5>{{ single_blog.title }}</h5>
+                                            <p>{{ single_blog.discription | safe }}</p>
+                                            <div class="post-card-info">
+                                                <ul class="list-inline">
+                                                    <li>
+                                                        <a href="#">{{ single_blog.author }}</a>
+                                                    </li>
+                                                    <li class="dot"></li>
+                                                    <li>{{ single_blog.creation | timesince }}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/-->
+                                
+
+
+                                    <!-- comment -->
+                                    <div class="pt-2 mb-11">
+                                        <div class="mb-4">
+                                            <h3>{{ comments.count }} Comment{{ comments.count | pluralize }}</h3>
+                                        </div>
+                                        <ul class="list-unstyled">
+                                            <!-- Comment -->
+                                            <li class="mb-5">
+                                                {% for comment in comments %}
+                                                    <div class="media align-items-center mb-2">
+                                                        <div class="media-body">
+                                                            <div class="d-flex justify-content-between align-items-center">
+                                                                <span class="mb-0">comments {{ forloop.counter }} by {{ comment.name }}</span>
+                                                                <small class="text-muted">on {{ comment.publish }}</small>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <p class="h5">
+                                                    {{ comment.body | linebreaks }}
+                                                    </p>
+                                                    {% empty %}
+                                                    <p class="h5">
+                                                    there is no comments for this post
+                                                    </p>
+
+                                                {% endfor %}
+                                                <p class="h5">
+                                                    Make your comment
+                                                </p>
+                                                
+                                            </li>
+                                        </ul>
+
+
+                                        <!-- Form -->
+                                            <form action='.' method='POST' class="js-validate">
+                                                <div class="form-row">
+                                                    <div class="col-sm-6 mb-sm-3">
+                                                        <div class="js-form-message form-group">
+
+                                                            <label class="input-label">Name</label>
+                                                            <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            name="name"
+                                                            id="inputName"
+                                                            placeholder="Name"
+                                                            aria-label="Name"
+                                                            required
+                                                            data-msg="Please enter your name."/>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 mb-sm-3">
+                                                        <div class="js-form-message form-group">
+                                                        <label class="input-label">Comment</label>
+                                                        <textarea
+                                                            class="form-control"
+                                                            name="body"
+                                                            rows="7"
+                                                            id="descriptionTextarea"
+                                                            placeholder="Comment"
+                                                            required
+                                                            data-msg="Please enter your message."
+                                                        ></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% csrf_token %}
+
+                                                <div class="d-flex justify-align-content-lg-start">
+                                                    <button
+                                                        type="submit"
+                                                        class="btn btn-primary btn-wide transition-3d-hover">
+                                                        Submit
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        <!-- End Form -->
+                                    </div>
+                                </div>
+                                <br>
+                                <!--pagination-->
+                                {% comment %} <div class="col-lg-12">
+                                    <div class="pagination mb--40">
+                                        <ul class="list-inline">
+                                            <li class="active">
+                                                <a href="#">1</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">2</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">3</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">4</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">
+                                                    <i class="arrow_carrot-2right"></i>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                <!--/-->
+                                </div>  {% endcomment %}
+                            </div>
+                        </div>
+                        <div class="col-lg-4 max-width">
+                            <!--widget-latest-posts-->
+                            <div class="widget ">
+                                <div class="section-title">
+                                    <h5>Latest Posts</h5>
+                                </div>
+                                <ul class="widget-latest-posts">
+                                
+                                    {% for blog in blogs %}
+                                        <li class="last-post">
+                                            <div class="image">
+                                                <a href="{{ blog.get_absolute_url }}">
+                                                    <img src="{{ blog.blog_thumbnail.url }}" alt="...">
+                                                </a>
+                                            </div>
+                                            <div class="nb">2</div>
+                                            <div class="content">
+                                                <p>
+                                                    <a href="{{ blog.get_absolute_url }}">{{ blog.title}}</a>
+                                                </p>
+                                                <small>
+                                                    <span class="icon_clock_alt"></span>{{ blog.creation }}</small>
+                                            </div>
+                                        </li>
+                                    {% endfor %}
+                                    
+                                </ul>
+                            </div>
+                            <!--/-->
+                            <!--widget-categories-->
+                            <div class="widget">
+                                <div class="section-title">
+                                    <h5>Categories</h5>
+                                </div>
+                                <ul class="widget-categories">
+                                
+                                    {% for category in categories %}
+                                        <li>
+                                            <a href="{{ category.get_absolute_url }}" class="categorie">{{ category.name }}</a>
+                                            <!--widget-categories <span class="ml-auto">10 Posts</span> -->
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </section><!--/-->
+
+
+    
+    <!--footer-->
+    {% include "footer.html" %}
+
+    <!--Search-form-->
+    <div class="search">
+        <div class="container-fluid">
+            <div class="search-width  text-center">
+                <button type="button" class="close">
+                    <i class="icon_close"></i>
+                </button>
+                <form class="search-form" action="#">
+                    <input type="search" value="" placeholder="What are you looking for?">
+                    <button type="submit" class="search-btn">search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--/-->
+
+  {% endblock mainblock %}
